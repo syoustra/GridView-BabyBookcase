@@ -22,17 +22,11 @@
 
 package com.raywenderlich.babybookcase;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -42,15 +36,15 @@ public class MainActivity extends ActionBarActivity {
     setContentView(R.layout.activity_main);
 
     GridView gridView = (GridView)findViewById(R.id.gridview);
-    final BookAdapter bookAdapter = new BookAdapter(this, books);
-    gridView.setAdapter(bookAdapter);
+    final BooksAdapter booksAdapter = new BooksAdapter(this, books);
+    gridView.setAdapter(booksAdapter);
 
     gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Book book = books[position];
         book.toggleFavorite();
-        bookAdapter.notifyDataSetChanged();
+        booksAdapter.notifyDataSetChanged();
       }
     });
   }
@@ -68,84 +62,4 @@ public class MainActivity extends ActionBarActivity {
     new Book("One Fish, Two Fish, Red Fish, Blue Fish", "Dr. Seuss", R.drawable.onefish)
   };
 
-  private class BookAdapter extends BaseAdapter {
-    private final Context mContext;
-    private final Book[] books;
-
-    public BookAdapter(Context context, Book[] books) {
-      this.mContext = context;
-      this.books = books;
-    }
-
-    @Override
-    public int getCount() {
-      return books.length;
-    }
-
-    @Override
-    public long getItemId(int position) {
-      return 0;
-    }
-
-    @Override
-    public Object getItem(int position) {
-      return null;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-      Book book = books[position];
-
-      // standard implementation
-//      if (convertView == null) {
-//        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-//        convertView = layoutInflater.inflate(R.layout.linearlayout_book, null);
-//      }
-//
-//      ImageView imageView = (ImageView)convertView.findViewById(R.id.imageview_book);
-//      TextView nameTextView = (TextView)convertView.findViewById(R.id.textview_book_name);
-//      TextView authorTextView = (TextView)convertView.findViewById(R.id.textview_book_author);
-//
-//      imageView.setImageResource(book.getImageResource());
-//      nameTextView.setText(book.getName());
-//      authorTextView.setText(book.getAuthor());
-
-      // view holder pattern
-      if (convertView == null) {
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        convertView = layoutInflater.inflate(R.layout.linearlayout_book, null);
-
-        ImageView imageViewCoverArt = (ImageView)convertView.findViewById(R.id.imageview_cover_art);
-        TextView nameTextView = (TextView)convertView.findViewById(R.id.textview_book_name);
-        TextView authorTextView = (TextView)convertView.findViewById(R.id.textview_book_author);
-        ImageView imageViewFavorite = (ImageView)convertView.findViewById(R.id.imageview_favorite);
-
-        ViewHolder viewHolder = new ViewHolder(nameTextView, authorTextView, imageViewCoverArt, imageViewFavorite);
-        convertView.setTag(viewHolder);
-      }
-
-      ViewHolder viewHolder = (ViewHolder)convertView.getTag();
-      viewHolder.imageViewCoverArt.setImageResource(book.getImageResource());
-      viewHolder.nameTextView.setText(book.getName());
-      viewHolder.authorTextView.setText(book.getAuthor());
-      viewHolder.imageViewFavorite.setImageResource(book.getIsFavorite() ? R.drawable.star_enabled : R.drawable.star_disabled);
-
-      return convertView;
-    }
-
-    private class ViewHolder {
-      private final TextView nameTextView;
-      private final TextView authorTextView;
-      private final ImageView imageViewCoverArt;
-      private final ImageView imageViewFavorite;
-
-      public ViewHolder(TextView nameTextView, TextView authorTextView, ImageView imageViewCoverArt, ImageView imageViewFavorite) {
-        this.nameTextView = nameTextView;
-        this.authorTextView = authorTextView;
-        this.imageViewCoverArt = imageViewCoverArt;
-        this.imageViewFavorite = imageViewFavorite;
-      }
-
-    }
-  }
 }
