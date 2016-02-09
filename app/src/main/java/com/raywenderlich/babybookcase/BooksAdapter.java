@@ -59,7 +59,7 @@ public class BooksAdapter extends BaseAdapter {
   public View getView(int position, View convertView, ViewGroup parent) {
     final Book book = books[position];
 
-    // standard implementation
+    // standard implementation (should start with this)
 //    if (convertView == null) {
 //      final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
 //      convertView = layoutInflater.inflate(R.layout.linearlayout_book, null);
