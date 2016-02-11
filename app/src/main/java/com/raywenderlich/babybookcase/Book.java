@@ -23,22 +23,24 @@
 package com.raywenderlich.babybookcase;
 
 public class Book {
-  private final String name;
-  private final String author;
+  private final int name;
+  private final int author;
   private final int imageResource;
   private boolean isFavorite = false;
+  private final String imageUrl;
 
-  public Book(String name, String author, int imageResource) {
+  public Book(int name, int author, int imageResource, String imageUrl) {
     this.name = name;
     this.author = author;
     this.imageResource = imageResource;
+    this.imageUrl = imageUrl;
   }
 
-  public String getName() {
+  public int getName() {
     return name;
   }
 
-  public String getAuthor() {
+  public int getAuthor() {
     return author;
   }
 
@@ -49,8 +51,15 @@ public class Book {
   public boolean getIsFavorite() {
     return isFavorite;
   }
+  public void setIsFavorite(boolean isFavorite) {
+    this.isFavorite = isFavorite;
+  }
 
   public void toggleFavorite() {
     isFavorite = !isFavorite;
+  }
+
+  public String getImageUrl() {
+    return imageUrl;
   }
 }

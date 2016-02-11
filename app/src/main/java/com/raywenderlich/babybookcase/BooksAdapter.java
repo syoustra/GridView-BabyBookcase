@@ -30,6 +30,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 public class BooksAdapter extends BaseAdapter {
 
   private final Context mContext;
@@ -71,8 +73,8 @@ public class BooksAdapter extends BaseAdapter {
 //    final ImageView imageViewFavorite = (ImageView)convertView.findViewById(R.id.imageview_favorite);
 //
 //    imageView.setImageResource(book.getImageResource());
-//    nameTextView.setText(book.getName());
-//    authorTextView.setText(book.getAuthor());
+//    nameTextView.setText(mContext.getString(book.getName()));
+//    authorTextView.setText(mContext.getString(book.getAuthor()));
 //    imageViewFavorite.setImageResource(book.getIsFavorite() ? R.drawable.star_enabled : R.drawable.star_disabled);
 
     // view holder pattern
@@ -90,10 +92,12 @@ public class BooksAdapter extends BaseAdapter {
     }
 
     final ViewHolder viewHolder = (ViewHolder)convertView.getTag();
-    viewHolder.imageViewCoverArt.setImageResource(book.getImageResource());
-    viewHolder.nameTextView.setText(book.getName());
-    viewHolder.authorTextView.setText(book.getAuthor());
+//    viewHolder.imageViewCoverArt.setImageResource(book.getImageResource());
+    viewHolder.nameTextView.setText(mContext.getString(book.getName()));
+    viewHolder.authorTextView.setText(mContext.getString(book.getAuthor()));
     viewHolder.imageViewFavorite.setImageResource(book.getIsFavorite() ? R.drawable.star_enabled : R.drawable.star_disabled);
+
+    Picasso.with(mContext).load(book.getImageUrl()).into(viewHolder.imageViewCoverArt);
 
     return convertView;
   }
