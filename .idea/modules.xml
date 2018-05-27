@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BabyBookcase.iml" filepath="$PROJECT_DIR$/BabyBookcase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GridView-BabyBookcase.iml" filepath="$PROJECT_DIR$/GridView-BabyBookcase.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>
-
