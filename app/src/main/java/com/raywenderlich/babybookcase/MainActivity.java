@@ -28,7 +28,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+
+    private static final String favoritedBookNamesKey = "favoritedBookNamesKey";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,45 @@ public class MainActivity extends AppCompatActivity {
 
       }
     });
+
   }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outstate) {
+      super.onSaveInstanceState(outstate);
+
+      //Construct a list of books you've favorited
+      final ArrayList<Integer> favoritedBookNames = new ArrayList<>();
+      for (Book book : books) {
+          if (book.getIsFavorite()) {
+              favoritedBookNames.add(book.getName());
+          }
+      }
+
+      //Save that list to outState for later
+      outstate.putIntegerArrayList(favoritedBookNamesKey, favoritedBookNames);
+  }
+
+  @Override
+  protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
+
+    //Get our previously saved list of favorited books
+    final ArrayList<Integer> favoritedBookNames =
+            savedInstanceState.getIntegerArrayList(favoritedBookNamesKey);
+
+    //Look at all your books and figure out which ones are the favorites
+    for (int bookName : favoritedBookNames) {
+        for (Book book : books) {
+            if (book.getName() == bookName) {
+                book.setIsFavorite(true);
+                break;
+            }
+        }
+    }
+  }
+
+
 
   private Book[] books = {
     new Book(R.string.abc_an_amazing_alphabet_book, R.string.dr_seuss, R.drawable.abc,
