@@ -24,6 +24,8 @@ package com.raywenderlich.babybookcase;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,8 +36,19 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     GridView gridView = (GridView) findViewById(R.id.gridview);
-    BooksAdapter booksAdapter = new BooksAdapter(this, books);
+    final BooksAdapter booksAdapter = new BooksAdapter(this, books);
     gridView.setAdapter(booksAdapter);
+
+    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView parent, View view, int position, long id) {
+        Book book = books[position];
+        book.toggleFavorite();
+
+        booksAdapter.notifyDataSetChanged();
+
+      }
+    });
   }
 
   private Book[] books = {
